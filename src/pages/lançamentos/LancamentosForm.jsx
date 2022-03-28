@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Form, Row, Button, Table } from 'react-bootstrap'
+import { Col, Form, Row, Button, Table, Image } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { FaArrowLeft, FaCheck, FaRegTrashAlt } from 'react-icons/fa'
+import { FaArrowLeft } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Box from '../../components/Box'
 import validador from '../../validators/LacamentosValidator'
 import LancamentosService from '../../services/assistir/LancamentosService'
 import { mask, unMask } from 'remask'
+import { FcFullTrash } from 'react-icons/fc'
 
 const LancamentosForm = (props) => {
 
@@ -71,14 +72,13 @@ const LancamentosForm = (props) => {
                         </Col>
                     </Form.Group>		            
                     <div className="text-center">
-                        <Button variant="success" onClick={handleSubmit(enviarDados)}><FaCheck /> Salvar</Button>{' '}
-                        <Link className="btn btn-danger" to="/lancamentos"><FaArrowLeft /> Voltar</Link>
+                    <Button variant="outline-dark" onClick={handleSubmit(enviarDados)} ><Image style={{ width:40 }} src='https://i.giphy.com/media/FIZ1QC610AAhi/giphy.webp' />{' '} Salvar</Button>{' '}
                     </div>
                 </Form>
 
                 <br /> 
 
-                <Table striped bordered hover>
+                <Table responsive hover>
                     <thead>
                         <tr>
                             <th>Ações</th>
@@ -93,7 +93,7 @@ const LancamentosForm = (props) => {
                             <tr key={i}>
                                 <td>
                                     {' '}
-                                    <FaRegTrashAlt className="text-danger"
+                                    <FcFullTrash className="text-danger"
                                     onClick={() => excluir(i)} title="Excluir" />
                                 </td>
                                 <td>{i}</td>
@@ -106,6 +106,8 @@ const LancamentosForm = (props) => {
                 </Table>
             
             </Box>
+            <br />
+            <Link className="btn btn-outline-dark" to="/listas"><FaArrowLeft />Voltar</Link>
         </>
     )
 }

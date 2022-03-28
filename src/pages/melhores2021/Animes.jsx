@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
-import { FaEdit, FaPlus, FaRegTrashAlt } from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa'
+import { FcFullTrash } from 'react-icons/fc'
+import { RiFileEditLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import Box from '../../components/Box'
 import AnimesService from '../../services/assistir/AnimesService'
+
+
 
 const Animes = () => {
 
@@ -26,14 +30,14 @@ const Animes = () => {
     return (
         <>
             <Box title="Animes">
-                <Link to="/animes/create" className="btn btn-primary mb-3"><FaPlus /> Novo</Link>
+                <Link to="/animes/create" className="btn btn-light mb-3"> Add <FaPlus /></Link>
 
 
-            <Table striped bordered hover variant="light">
+            <Table responsive hover>
                     <thead>
                         <tr>
-                            <th>Ações</th>
-                            <th>#</th>
+                            <th></th>
+                            <th></th>
                             <th>Nome</th>
                             <th>Gênero</th>
                             <th>Idiomas</th>
@@ -46,10 +50,10 @@ const Animes = () => {
                             <tr key={i}>
                                 <td>
                                     <Link to={'/animes/' + i}>
-                                        <FaEdit title="Editar" />
+                                        <RiFileEditLine title="Editar" />
                                     </Link>
                                     {' '}
-                                    <FaRegTrashAlt className="text-danger"
+                                    <FcFullTrash className="text-danger"
                                     onClick={() => excluir(i)} title="Excluir" />
                                 </td>
                                 <td>{i}</td>

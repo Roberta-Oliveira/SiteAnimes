@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Table } from 'react-bootstrap'
-import { FaEdit, FaPlus, FaRegTrashAlt } from 'react-icons/fa'
+import { Form, FormControl, Table, Button } from 'react-bootstrap'
+import { FaPlus } from 'react-icons/fa'
+import { FcFullTrash } from 'react-icons/fc'
+import { RiFileEditLine } from 'react-icons/ri'
 import { Link } from 'react-router-dom'
 import Box from '../../components/Box'
 import GenerosService from '../../services/assistir/GenerosService'
@@ -22,19 +24,34 @@ const Generos = () => {
         }
     }
 
+    
+
     return (
         <>
             <Box title="Gêneros">
-                <Link to="/generos/create" className="btn btn-primary mb-3"><FaPlus /> Novo</Link>
+                <Link to="/generos/create" className="btn btn-primary mb-3"> Add <FaPlus /></Link>
+                
+                <Form className="d-flex">
+                    <FormControl
+                    type="search"
+                    placeholder="Buscar"
+                    className="me-2"
+                    aria-label="Buscar"
+                    />
+                    <Button variant="outline-light-success" >Search</Button>
+                </Form>
+                <br />
 
-                <Table striped bordered hover>
+
+                <Table class="table table-bordered table-responsive" data-sortable>
                     <thead>
                         <tr>
-                            <th>Ações</th>
+                            <th></th>
                             <th>Numero</th>
                             <th>Gênero</th>
                             <th>Nome</th>
                             <th>Ano</th>
+                            <th>Idioma</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,16 +59,17 @@ const Generos = () => {
                             <tr key={i}>
                                 <td>
                                     <Link to={"/generos/" + i}>
-                                        <FaEdit title="Editar" />
+                                        <RiFileEditLine title="Editar" />
                                     </Link>
                                     {' '}
-                                    <FaRegTrashAlt className="text-danger" 
+                                    <FcFullTrash className="text-danger" 
                                     title="Excluir" onClick={() => excluir(i)} />
                                 </td>
                                 <td>{i}</td>
                                 <td>{genero.genero}</td>
                                 <td>{genero.nome}</td>
                                 <td>{genero.ano}</td>
+                                <td>{genero.idioma}</td>
                             
                             </tr>    
                         ))}

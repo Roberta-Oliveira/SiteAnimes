@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { Col, Form, Row, Button } from 'react-bootstrap'
+import { Col, Form, Row, Button, Image } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { FaArrowLeft, FaCheck } from 'react-icons/fa'
+import { FaArrowLeft } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Box from '../../components/Box'
 import GenerosService from '../../services/assistir/GenerosService'
@@ -52,8 +52,12 @@ const GenerosForm = (props) => {
                     <Form.Group as={Row} className="mb-3" controlId="idioma">
                         <Form.Label column sm={2}>Idioma: </Form.Label>
                         <Col sm={10}>
-                            <Form.Control type="text" {...register("idioma", validador.idioma)} />
-                            {errors.idioma && <span className="text-danger">{errors.idioma.message}</span>}
+                        <Form.Select {...register("idioma", validador.idioma)}>
+                                <option></option>
+                                <option>Portugues</option>
+                                <option>Japonês/Portugues</option>
+                                <option>Japonês</option>
+                            </Form.Select>
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row} className="mb-3" controlId="ano">
@@ -64,11 +68,12 @@ const GenerosForm = (props) => {
                     </Form.Group>
                     				            
                     <div className="text-center">
-                        <Button variant="success" onClick={handleSubmit(enviarDados)}><FaCheck /> Salvar</Button>{' '}
-                        <Link className="btn btn-danger" to="/generos"><FaArrowLeft /> Voltar</Link>
+                    <Button variant="outline-dark" onClick={handleSubmit(enviarDados)} ><Image style={{ width:60 }} src='https://i.pinimg.com/originals/06/a4/72/06a472766b5c90c0959a572eaaa6fb4b.gif' />{' '} Salvar</Button>{' '}
                     </div>
                 </Form>
             </Box>
+            <br />
+                    <Link className="btn btn-outline-dark" to="/generos"><FaArrowLeft />Voltar</Link>
         </>
     )
 }

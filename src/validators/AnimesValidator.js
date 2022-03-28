@@ -15,7 +15,7 @@ const AnimesValidator = {
     },
     idioma: {
         required: mensagens.required,
-        maxLength: {value: 50, message: mensagens.maxLength}
+       
     },
 }
 

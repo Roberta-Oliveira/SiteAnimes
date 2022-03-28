@@ -1,44 +1,50 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
+import apiAnimes from '../../services/apiAnimes'
+import { FaSistrix } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import "./inicio.style.css";
 
 
 
-const Inicio = () => {
+const Inicio = (props) => {
 
     const [inicio, setInicio] = useState([])
 
     useEffect(()=>{
 
-        fetch(
-            "https://animechan.vercel.app/api/available/anime"
-            )
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data.dados);
-                setInicio(data.dados);
-            });
-        }, []);
+        const id = props.match.params.id
+
+        apiAnimes.get('/available/anime').then( resultado => {
+            setInicio(resultado.data)
+            console.log(resultado.data);
+        })
+
+    }, [props])
 
     
     return (
         <>
-            <h1>Animes Disponíveis</h1>
+            <h1 className="titulo">Animes Disponíveis</h1>
         <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Detalhar</th>
+                        <th>Detalhes</th>
                         <th>Animes</th>
-                        <th>Personagem</th>
-                        <th>Citação</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     {inicio.map((tipos) => (
-                        <tr key={inicio.id} >
+                        <tr key={tipos.id} >
+                            <td>
+                                <Link to={"/tipos/" + inicio.id}>
+                                    <FaSistrix />
+                                </Link>
+                            </td>
                             
-                            <td>{tipos.anime}</td>
-                            <td>{tipos.personagem}</td>
-                            <td>{tipos.quote}</td>
+                            <td>{tipos}</td>
+                          
                             
                         </tr>
                     ))}

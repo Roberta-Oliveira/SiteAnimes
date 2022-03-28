@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { Col, Form, Row, Button } from 'react-bootstrap'
+import { Col, Form, Row, Button, Image } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { FaArrowLeft, FaCheck } from 'react-icons/fa'
+import { FaArrowLeft } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Box from '../../components/Box'
 import AnimesService from '../../services/assistir/AnimesService'
@@ -52,8 +52,12 @@ const AnimesForm = (props) => {
                     <Form.Group as={Row} className="mb-3" controlId="idioma">
                         <Form.Label column sm={2}>Idioma: </Form.Label>
                         <Col sm={10}>
-                            <Form.Control type="text" {...register("idioma", validador.idioma)} />
-                            {errors.idioma && <span className="text-danger">{errors.idioma.message}</span>}
+                        <Form.Select {...register("idioma", validador.idioma)}>
+                                <option></option>
+                                <option>Portugues</option>
+                                <option>Japonês/Portugues</option>
+                                <option>Japonês</option>
+                            </Form.Select>
                         </Col>
                     </Form.Group>					            
                     <Form.Group as={Row} className="mb-3" controlId="temporadas">
@@ -72,11 +76,14 @@ const AnimesForm = (props) => {
                         </Col>
                     </Form.Group>					            
                     <div className="text-center">
-                        <Button variant="success" onClick={handleSubmit(enviarDados)}><FaCheck /> Salvar</Button>{' '}
-                        <Link className="btn btn-danger" to="/animes"><FaArrowLeft />Voltar</Link>
+                    <Button variant="outline-dark" onClick={handleSubmit(enviarDados)} ><Image style={{ width:40 }} src='https://i.giphy.com/media/a6pzK009rlCak/giphy.webp' />{' '} Salvar</Button>{' '}
+                    
                     </div>
                 </Form>
+                    
             </Box>
+            <br />
+                <Link className="btn btn-outline-dark" to="/animes"><FaArrowLeft />Voltar</Link>
         </>
     )
 }

@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
-import { Col, FloatingLabel, Form, Row, Button} from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Col, FloatingLabel, Form, Row, Button, Image} from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-import { FaArrowLeft, FaCheck } from 'react-icons/fa'
 import Box from '../../components/Box'
 import ContatoService from '../../services/assistir/ContatoService'
 import validador from '../../validators/ContatoValidator'
-import logo from '../contato/img.png'
+import "./contato.style.css"
+import axios from 'axios';
 
 
 const ContatoForm = (props) => {
@@ -32,56 +31,89 @@ const ContatoForm = (props) => {
         props.history.push('/animes')
         console.log(dados);
     }
+    
+    const [campos, setCampos] = useState({
+        nome: '',
+        email: '',
+        mensagem: ''
+        
+    });
+    function handleInputChange(event){
+        campos[event.target.name] = event.target.value;
+        setCampos(campos);
+    }
+    
+    function handleFormSubmit(event){
+        event.preventDefault();
+        window.confirm('Sua mensagem foi Enviada :) !')
+        console.log(campos);
+        send();
+        
+    }
+
+    function send(){
+    const formData = new FormData();
+    Object.keys(campos).forEach(key => formData.append(key, campos[key]));
+    axios.post('http://localhost:3030/send', 
+                formData,
+                {
+                headers: {
+                    "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+                }
+                })
+        .then(response => { console.log(response.data); })
+    }
+
+
+    
+
 
     return (
         <>
 
             <div class="text-center">
-                <img class="img-rounded mx-auto d-block" src={logo}
+            <Image style={{ width:300 }} src='https://c.tenor.com/64YL9Tmm7_AAAAAC/naruto-thumbs-up.gif' />
+                {/*<img class="img-rounded mx-auto d-block" src={logo}
                     width="180,25"
                     height="182,12"
                     alt="..."
                     className="d-inline-block align-top"
                     
-                />
+                />*/}
             </div>
 
-            <br />
+            
                                    
                 
             <Box title="Contato">
                 
+               <div>    
+                <Form onSubmit={handleFormSubmit}>
+
+                    <label htmlFor="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome da pessoa.." onChange={handleInputChange} {...register("nome", validador.nome)}  />
+                    {errors.nome && <span className="text-danger">{errors.nome.message}</span>}
+
+                    <label htmlFor="email">E-mail</label>
+                    <input type="text" id="email" name="email" placeholder="E-mail de destino.." onChange={handleInputChange}/>
+            
+            
+                    <label htmlFor="mensagem">Mensagem</label>
+                    <textarea id="mensagem" name="mensagem" placeholder="Escreva algo.." className="textArea" onChange={handleInputChange}></textarea>
                     
-                <Form>
-                <Form.Group as={Row} className="mb-3" controlId="nome">
-                        <Form.Label column sm={4}>Nome: </Form.Label>
-                        <Col sm={10}>
-                            <Form.Control placeholder="Jane Doe" type="text" {...register("nome", validador.nome)} />
-                            {errors.nome && <span className="text-danger">{errors.nome.message}</span>}
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} className="mb-3" controlId="email">
-                        <Form.Label column sm={4}>E-mail: </Form.Label>
-                        <Col sm={10}>
-                            <Form.Control placeholder="email@example.com" type="email" {...register("email", validador.email)} />
-                            {errors.email && <span className="text-danger">{errors.email.message}</span>}
-                        </Col>
-                    </Form.Group>
-                    <FloatingLabel controlId="floatingTextarea2" label="Não encontrou seu anime, nos avise aqui. ">
-                      <Form.Control
-                        as="textarea"
-                        placeholder="Leave a comment here"
-                        style={{ height: '100px' }}
-                        />
-                    </FloatingLabel>
+
+                    <div className="text-center">
+                    <Button variant="outline-dark" onClick={handleInputChange(enviarDados)} ><Image style={{ width:40 }} src='https://i.giphy.com/media/FIZ1QC610AAhi/giphy.webp' />{' '} Enviar</Button>{' '}
+                    
+                     </div>
+                
+                   { /*<input type="submit" value="Enviar" />*/}
 
                     <br />
                     
-                    <div className="text-center">
-                        <Button variant="success" onClick={handleSubmit(enviarDados)}><FaCheck /> Salvar</Button>{ ' ' }
-                        <Link className="btn btn-danger" to="/contato"><FaArrowLeft /> Voltar</Link> 
-                    </div>
+                    
                 </Form>
+            </div> 
             </Box>
         </>
     )

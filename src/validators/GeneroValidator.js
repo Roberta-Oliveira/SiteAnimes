@@ -9,6 +9,10 @@ const GeneroValidator = {
     genero: {
         required: mensagens.required,
         maxLength: {value: 14, message: mensagens.maxLength + ': 14'}
+    },
+    idioma: {
+        required: mensagens.required,
+        
     }
 }
 
