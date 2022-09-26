@@ -11,6 +11,7 @@ function App() {
       <BrowserRouter>
         <Menu />
         <Rotas />
+        
       </BrowserRouter>
 
     </>
