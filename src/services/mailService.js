@@ -6,8 +6,8 @@ module.exports = (email, nome, mensagem) => {
         port: 587,
         secure: false, //SSL/TLS
         auth: {
-            user: 'roberta.avelino@robertalive.com',
-            pass: 'iesb123@'
+            user: '',
+            pass: ''
         }
     })
     
